@@ -1,54 +1,56 @@
+
+const container = document.querySelector(".container");
 const textWrapper = document.querySelector(".textWrapper");
-const addBtn = document.querySelector("#addBtn");
-const input = document.querySelectorAll("input");
-const bookList=[{}];
-// const myArrayString =JSON.stringify("bookList")
+const addBtn = document.querySelector("#btn");
+const input = document.querySelectorAll(".input");
+const bookList = JSON.parse(localStorage.getItem("myBookList")) || [];
 
-const add = () => {
-  console.log("button was clicked");
-  let title = input[0].value;
-  let author = input[1].value;
-
-  if(title!=="" && author!==""){
-    createElem(title, author);
-    bookList.push(title, author);
-console.log(bookList)
-
+function addBook() {
+  console.log("clicked to add book");
+  let inputValueTitle = input[0].value;
+  let inputValueaAuthor = input[1].value;
+  if (inputValueTitle !== "" && inputValueaAuthor !== "") {
+    console.log(bookList);
+    bookList.push({ title: inputValueTitle, author: inputValueaAuthor });
+    createElement(inputValueTitle, inputValueaAuthor);
+    localStorage.setItem("myBookList", JSON.stringify(bookList));
   }
-  input[0].value="";
-  input[1].value=""
+  input[0].value = "";
+  input[1].value = "";
+}
 
-  console.log(title, author)
+addBtn.addEventListener("click", addBook);
 
-//   localStorage.setItem("mySaved", myArrayString);
-//   const myArrParse = localStorage.getItem("mySaved");
-//   const storage=JSON.parse(myArrParse);
-//   console.log(storage)
-};
-
-
-
-
-addBtn.addEventListener("click", add);
-
-function createElem(title, author) {
+function createElement(inputValueTitle, inputValueaAuthor) {
+  const container = document.createElement("div");
+  container.className = "bookContainer";
   const h3 = document.createElement("h3");
-  h3.innerText = title;
-
+  h3.innerHTML = inputValueTitle;
   const p = document.createElement("p");
-  p.innerText = author;
-
+  p.innerText = inputValueaAuthor;
   const button = document.createElement("button");
   button.innerText = "Remove";
+  const divLine = document.createElement("div");
+  divLine.className = "line";
 
-  const line = document.createElement("div");
-  line.className = "line";
+  // Remove Button part
+  button.addEventListener("click", () => {
+    container.style.display = "none";
+    bookList.splice(
+      bookList.findIndex(
+        (book) =>
+          book.title === inputValueTitle && book.author === inputValueaAuthor
+      ),
+      1
+    );
+    localStorage.setItem("myBookList", JSON.stringify(bookList));
+  });
 
-  const childDiv = document.createElement("div")
+  container.append(h3, p, button, divLine);
+  textWrapper.appendChild(container);
+}
 
-  button.addEventListener('click', ()=>{
-    childDiv.style.display ="none"
-  })
-  childDiv.append(h3, p, button, line)
-  textWrapper.append(childDiv);
+// Populate book list from local storage on page load
+for (const book of bookList) {
+  createElement(book.title, book.author);
 }
