@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+body{
+    display:flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid green;
+    ;
+
+}
+
+
+.textWrapper{
+    margin: 15px 0;
+
+}
+
+
+.line{
+    border: 1px solid rgba(158, 158, 158, 0.659);
+    margin: 10px 0;
+
+}
+input{
+    display: block;
+    margin-bottom: 10px;
+}
+
+.hideBtn{
+    display: none;
+}
+
+    
