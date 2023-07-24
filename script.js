@@ -55,9 +55,6 @@ for (const book of bookList) {
   createElement(book.title, book.author);
 }
 
-for()let i=0; i<5;i++{
-
-}
 
 
-//adding this comment to practice pushing to github
+
